@@ -7,9 +7,8 @@ export default function App() {
   const [mode, setMode] = useState<"edit" | "preview" | "results">("edit");
 
   const toggleMode = () => {
-    setMode(
-      mode === "edit" ? "preview" : mode === "preview" ? "results" : "edit"
-    );
+    const isPreviewState = mode === "preview" || mode === "results";
+    setMode(isPreviewState ? "edit" : "preview");
   };
 
   return (
@@ -18,19 +17,21 @@ export default function App() {
         <h1 className="text-2xl font-bold">Accessible Quiz Builder (React)</h1>
         <div className="space-x-2">
           <button
+            type="button"
             aria-pressed={mode === "edit" || mode === "preview"}
-            className="px-3 py-1 border rounded"
+            className="font-medium  bg-slate-200 border border-slate-200 px-3 py-1 rounded-md shadow-sm"
             onClick={toggleMode}
           >
-            {mode === "edit" ? "Preview" : "Back to Edit"}
+            {mode === "edit" ? "Preview" : "Edit"}
           </button>
           <button
+            type="button"
             aria-pressed={mode === "results"}
-            className="px-3 py-1 border rounded"
+            className="text-white font-medium  bg-blue-600 border border-blue-600 px-3 py-1 rounded-md shadow-sm"
             onClick={() => setMode("results")}
             hidden={mode === "edit"}
           >
-            Submit Quiz
+            Submit
           </button>
         </div>
       </header>
