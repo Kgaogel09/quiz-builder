@@ -12,7 +12,7 @@ export default function App() {
   };
 
   return (
-    <main className="p-6 max-w-3xl mx-auto">
+    <main className="min-h-screen p-8 max-w-4xl mx-auto">
       <header className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold">Accessible Quiz Builder (React)</h1>
         <div className="space-x-2">
