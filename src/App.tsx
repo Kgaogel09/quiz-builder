@@ -25,11 +25,12 @@ export default function App() {
             {mode === "edit" ? "Preview" : "Back to Edit"}
           </button>
           <button
-            aria-pressed={mode === "preview"}
+            aria-pressed={mode === "results"}
             className="px-3 py-1 border rounded"
-            onClick={() => setMode("preview")}
+            onClick={() => setMode("results")}
+            hidden={mode === "edit"}
           >
-            Preview
+            Submit Quiz
           </button>
         </div>
       </header>
