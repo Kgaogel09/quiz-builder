@@ -5,17 +5,24 @@ import Results from "./components/results/Results";
 
 export default function App() {
   const [mode, setMode] = useState<"edit" | "preview" | "results">("edit");
+
+  const toggleMode = () => {
+    setMode(
+      mode === "edit" ? "preview" : mode === "preview" ? "results" : "edit"
+    );
+  };
+
   return (
     <main className="p-6 max-w-3xl mx-auto">
       <header className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold">Accessible Quiz Builder (React)</h1>
         <div className="space-x-2">
           <button
-            aria-pressed={mode === "edit"}
+            aria-pressed={mode === "edit" || mode === "preview"}
             className="px-3 py-1 border rounded"
-            onClick={() => setMode("edit")}
+            onClick={toggleMode}
           >
-            Edit
+            {mode === "edit" ? "Preview" : "Back to Edit"}
           </button>
           <button
             aria-pressed={mode === "preview"}
