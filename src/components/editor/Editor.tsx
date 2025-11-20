@@ -1,4 +1,4 @@
-import { Plus, Save, TriangleAlert } from "lucide-react";
+import { Check, Plus, Save, TriangleAlert, X } from "lucide-react";
 import { Question } from "../../types/type";
 
 interface QuizEditorProps {
@@ -31,7 +31,7 @@ export default function Editor({
     <div className="flex flex-col gap-6 bg-white shadow-md border border-slate-100 rounded-md p-4">
       <h2 className="text-xl font-bold text-center">Edit Quiz</h2>
       <div className="flex flex-col gap-3 bg-gray-100 rounded-md p-4 border border-gray-200">
-        <h5 className="text-lg font-medium">How to use:</h5>
+        <h3 className="text-lg font-medium">How to use:</h3>
         <ul>
           <li>Add questions and options using the buttons below</li>
           <li>
@@ -58,6 +58,41 @@ export default function Editor({
             onSaveQuiz();
           }}
         >
+          <div className="flex mb-3">
+            <div className="grow">
+              <div className="mb-4">
+                <h5 className="font-medium mb-1">Question 1</h5>
+                <input
+                  type="text"
+                  name="questionTitle"
+                  id="questionTitle"
+                  placeholder="Enter question title"
+                  onChange={() => {}}
+                  className="text-sm shadow-sm border-gray-100 bg-gray-100 block w-full rounded-md p-2"
+                />
+              </div>
+              <div>
+                <h5 className="font-medium">Options:</h5>
+                <div className="flex items-center mb-2 gap-2">
+                  <span className="mr-2">{String.fromCharCode(65 + 0)}.</span>
+                  <input
+                    type="text"
+                    name="questionOption"
+                    id="questionOption"
+                    value={"test"}
+                    onChange={() => {}}
+                    className="text-sm shadow-sm border-gray-100 bg-gray-100 block w-full rounded-md p-2"
+                  />
+                  <button className="inline-flex items-center justify-center rounded-md p-2 hover:bg-gray-100 transition">
+                    <Check size={16} />
+                  </button>
+                  <button className="inline-flex items-center justify-center rounded-md p-2 hover:bg-gray-100 transition">
+                    <X size={16} />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
           <div className="flex gap-4 mt-4">
             <button
               type="button"
