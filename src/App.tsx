@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Editor from "./components/editor/editor";
+import Preview from "./components/preview/Preview";
 export default function App() {
   const [mode, setMode] = useState<"edit" | "preview">("edit");
   return (
@@ -24,13 +25,7 @@ export default function App() {
         </div>
       </header>
       <section aria-live="polite">
-        {mode === "edit" ? (
-          <Editor />
-        ) : (
-          <p className="text-sm text-gray-600">
-            Preview mode placeholder — render your quiz here.
-          </p>
-        )}
+        {mode === "edit" ? <Editor /> : <Preview />}
       </section>
     </main>
   );
