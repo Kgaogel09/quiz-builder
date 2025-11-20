@@ -2,13 +2,20 @@ import React, { useState } from "react";
 import Editor from "./components/editor/editor";
 import Preview from "./components/preview/Preview";
 import Results from "./components/results/Results";
+import { useQuizStorage } from "./hooks/useQuizStorage";
 
 export default function App() {
   const [mode, setMode] = useState<"edit" | "preview" | "results">("edit");
+  const { questions, saveQuestions } = useQuizStorage();
 
   const toggleMode = () => {
     const isPreviewState = mode === "preview" || mode === "results";
     setMode(isPreviewState ? "edit" : "preview");
+  };
+
+  const handleSaveQuiz = () => {
+    saveQuestions(questions);
+    alert("Quiz saved to local storage!");
   };
 
   return (
@@ -38,9 +45,9 @@ export default function App() {
       <section aria-live="polite">
         {mode === "edit" && (
           <Editor
-            questions={[]}
-            onQuestionsUpdate={() => {}}
-            onSaveQuiz={() => {}}
+            questions={questions}
+            onQuestionsUpdate={saveQuestions}
+            onSaveQuiz={handleSaveQuiz}
           />
         )}
         {mode === "preview" && <Preview />}
