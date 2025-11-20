@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Editor from "./components/editor/editor";
 import Preview from "./components/preview/Preview";
+
 export default function App() {
   const [mode, setMode] = useState<"edit" | "preview">("edit");
   return (
@@ -25,7 +26,8 @@ export default function App() {
         </div>
       </header>
       <section aria-live="polite">
-        {mode === "edit" ? <Editor /> : <Preview />}
+        {mode === "edit" && <Editor />}
+        {mode === "preview" && <Preview />}
       </section>
     </main>
   );
