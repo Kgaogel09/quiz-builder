@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import Editor from "./components/editor/editor";
 import Preview from "./components/preview/Preview";
+import Results from "./components/results/Results";
 
 export default function App() {
-  const [mode, setMode] = useState<"edit" | "preview">("edit");
+  const [mode, setMode] = useState<"edit" | "preview" | "results">("edit");
   return (
     <main className="p-6 max-w-3xl mx-auto">
       <header className="flex items-center justify-between mb-6">
@@ -28,6 +29,7 @@ export default function App() {
       <section aria-live="polite">
         {mode === "edit" && <Editor />}
         {mode === "preview" && <Preview />}
+        {mode === "results" && <Results />}
       </section>
     </main>
   );
