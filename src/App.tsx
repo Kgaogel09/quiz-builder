@@ -36,7 +36,13 @@ export default function App() {
         </div>
       </header>
       <section aria-live="polite">
-        {mode === "edit" && <Editor />}
+        {mode === "edit" && (
+          <Editor
+            questions={[]}
+            onQuestionsUpdate={() => {}}
+            onSaveQuiz={() => {}}
+          />
+        )}
         {mode === "preview" && <Preview />}
         {mode === "results" && <Results />}
       </section>
