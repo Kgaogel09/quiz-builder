@@ -29,8 +29,8 @@ export default function Editor({
 
   return (
     <div className="flex flex-col gap-6 bg-white shadow-md border border-slate-100 rounded-md p-4">
-      <h2 className="text-xl font-bold text-center">Edit Quiz</h2>
-      <div className="flex flex-col gap-3 bg-gray-100 rounded-md p-4 border border-gray-200">
+      <h2 className="text-xl font-bold">Edit Quiz</h2>
+      <div className="flex flex-col gap-3 bg-gray-100 rounded-md p-4 border border-gray-100 shadow-sm">
         <h3 className="text-lg font-medium">How to use:</h3>
         <ul>
           <li>Add questions and options using the buttons below</li>
@@ -44,9 +44,9 @@ export default function Editor({
         </ul>
       </div>
       {!allQuestionsHaveAnswers && hasQuestions && (
-        <div className="flex gap-2 items-center">
-          <TriangleAlert className="text-amber-200" />
-          <span className="text-amber-200">
+        <div className="flex gap-2 items-center justify-center">
+          <TriangleAlert className="text-[#f7bd44]" />
+          <span className="text-[#f7bd44]">
             Some questions missing correct answers
           </span>
         </div>
@@ -100,7 +100,7 @@ export default function Editor({
                 <div className="flex gap-4 mt-4">
                   <button
                     type="button"
-                    className="text-cyan-500 flex items-center gap-1  text-sm font-medium  border border-cyan-500 px-3 py-1 rounded-md shadow-sm"
+                    className="text-[#0075de] flex items-center gap-1  text-sm font-medium  border border-[#0075de] px-3 py-1 rounded-md shadow-sm"
                   >
                     Add Option
                   </button>
@@ -114,18 +114,14 @@ export default function Editor({
               </div>
             </div>
           ))}
-          <div className="flex gap-4 mt-4">
+          <div className="flex justify-end gap-4 mt-4">
             <button
-              type="button"
-              className="flex items-center gap-1 text-white text-base font-medium bg-blue-600 border border-blue-600 px-3 py-1 rounded-md shadow-sm"
+              className="text-[#0075de] border border-[#0075de] rounded-md shadow-sm  px-3 py-1"
               onClick={addQuestion}
             >
               Add Question
             </button>
-            <button
-              type="submit"
-              className="flex items-center gap-1 text-white text-base font-medium bg-green-600 border border-green-600 px-3 py-1 rounded-md shadow-sm"
-            >
+            <button className="text-white bg-[#0075de] border border-[#0075de] px-3 py-1 rounded-md shadow-sm">
               Save Quiz
             </button>
           </div>
