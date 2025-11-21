@@ -34,7 +34,7 @@ export default function App() {
           <button
             type="button"
             aria-pressed={mode === "results"}
-            className="text-white bg-[#0075de] border border-[#0075de] px-3 py-1 rounded-md shadow-sm transition"
+            className="text-white bg-sky-600 border border-sky-600 px-3 py-1 rounded-md shadow-sm transition"
             onClick={() => setMode("results")}
             hidden={mode === "edit"}
           >

@@ -45,8 +45,8 @@ export default function Editor({
       </div>
       {!allQuestionsHaveAnswers && hasQuestions && (
         <div className="flex gap-2 items-center justify-center">
-          <TriangleAlert className="text-[#f7bd44]" />
-          <span className="text-[#f7bd44]">
+          <TriangleAlert className="text-amber-400" />
+          <span className="text-amber-400">
             Some questions missing correct answers
           </span>
         </div>
@@ -100,7 +100,7 @@ export default function Editor({
                 <div className="flex gap-4 mt-4">
                   <button
                     type="button"
-                    className="text-[#0075de] flex items-center gap-1 text-sm border border-[#0075de] px-3 py-1 rounded-md shadow-sm transition"
+                    className="text-sky-600 flex items-center gap-1 text-sm border border-sky-600 px-3 py-1 rounded-md shadow-sm transition"
                   >
                     Add Option
                   </button>
@@ -116,12 +116,12 @@ export default function Editor({
           ))}
           <div className="flex justify-end gap-4 mt-4">
             <button
-              className="text-[#0075de] border border-[#0075de] rounded-md shadow-sm  px-3 py-1 transition"
+              className="text-white bg-emerald-500 border border-emerald-500 rounded-md shadow-sm  px-3 py-1 transition"
               onClick={addQuestion}
             >
               Add Question
             </button>
-            <button className="text-white bg-[#0075de] border border-[#0075de] px-3 py-1 rounded-md shadow-sm transition">
+            <button className="text-white bg-sky-600 border border-sky-600 px-3 py-1 rounded-md shadow-sm transition">
               Save Quiz
             </button>
           </div>
