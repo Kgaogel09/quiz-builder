@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import Editor from "./components/editor/editor";
+
 import Preview from "./components/preview/Preview";
 import Results from "./components/results/Results";
 import { useQuizStorage } from "./hooks/useQuizStorage";
+import Editor from "./components/editor/Editor";
 
 export default function App() {
   const [mode, setMode] = useState<"edit" | "preview" | "results">("edit");
@@ -42,7 +43,10 @@ export default function App() {
           </button>
         </div>
       </header>
-      <section aria-live="polite">
+      <section
+        aria-live="polite"
+        className="bg-white shadow-md border border-slate-100 rounded-md p-4"
+      >
         {mode === "edit" && (
           <Editor
             questions={questions}
