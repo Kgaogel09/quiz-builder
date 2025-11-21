@@ -88,11 +88,11 @@ export default function Editor({
                         className="text-sm shadow-sm border-[#f6f5f4] bg-[#f6f5f4] block w-full rounded-md p-2"
                         placeholder={`Option ${optionIndex + 1}`}
                       />
-                      <button className="inline-flex items-center justify-center rounded-md p-2 hover:bg-[#f6f5f4] transition">
-                        <Check size={16} />
+                      <button className="border border-emerald-600 inline-flex items-center justify-center rounded-md p-2 transition">
+                        <Check size={14} className="text-emerald-600" />
                       </button>
-                      <button className="inline-flex items-center justify-center rounded-md p-2 hover:bg-[#f6f5f4] transition">
-                        <X size={16} />
+                      <button className="border border-red-500 inline-flex items-center justify-center rounded-md p-2 transition">
+                        <X size={14} className="text-red-500" />
                       </button>
                     </div>
                   ))}
@@ -100,13 +100,13 @@ export default function Editor({
                 <div className="flex gap-4 mt-4">
                   <button
                     type="button"
-                    className="text-[#0075de] flex items-center gap-1 text-sm border border-[#0075de] px-3 py-1 rounded-md shadow-sm"
+                    className="text-[#0075de] flex items-center gap-1 text-sm border border-[#0075de] px-3 py-1 rounded-md shadow-sm transition"
                   >
                     Add Option
                   </button>
                   <button
                     type="submit"
-                    className="flex text-white items-center gap-1 bg-red-500 text-sm border border-red-500 px-3 py-1 rounded-md shadow-sm"
+                    className="flex text-white items-center gap-1 bg-red-500 text-sm border border-red-500 px-3 py-1 rounded-md shadow-sm transition"
                   >
                     Remove Question
                   </button>
@@ -116,12 +116,12 @@ export default function Editor({
           ))}
           <div className="flex justify-end gap-4 mt-4">
             <button
-              className="text-[#0075de] border border-[#0075de] rounded-md shadow-sm  px-3 py-1"
+              className="text-[#0075de] border border-[#0075de] rounded-md shadow-sm  px-3 py-1 transition"
               onClick={addQuestion}
             >
               Add Question
             </button>
-            <button className="text-white bg-[#0075de] border border-[#0075de] px-3 py-1 rounded-md shadow-sm">
+            <button className="text-white bg-[#0075de] border border-[#0075de] px-3 py-1 rounded-md shadow-sm transition">
               Save Quiz
             </button>
           </div>
