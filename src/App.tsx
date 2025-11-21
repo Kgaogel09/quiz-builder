@@ -26,7 +26,7 @@ export default function App() {
           <button
             type="button"
             aria-pressed={mode === "edit" || mode === "preview"}
-            className="text-white bg-[#191918] border border-[#191918] px-3 py-1 rounded-md shadow-sm transition"
+            className="text-white bg-sky-600 border border-sky-600 px-3 py-1 rounded-md shadow-sm transition"
             onClick={toggleMode}
           >
             {mode === "edit" ? "Preview" : "Edit"}
@@ -34,7 +34,7 @@ export default function App() {
           <button
             type="button"
             aria-pressed={mode === "results"}
-            className="text-white bg-sky-600 border border-sky-600 px-3 py-1 rounded-md shadow-sm transition"
+            className="text-white bg-emerald-500 border border-emerald-500 rounded-md shadow-sm  px-3 py-1 transition"
             onClick={() => setMode("results")}
             hidden={mode === "edit"}
           >
