@@ -16,5 +16,9 @@ body {
   font-weight: normal;
   font-style: normal;
   line-height: 1.5;
-  background: #f6f6f8;
+  background: #f6f5f4;
+}
+
+svg {
+  display: inline-flex;
 }
