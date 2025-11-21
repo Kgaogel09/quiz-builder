@@ -88,7 +88,7 @@ export default function Editor({
   };
 
   return (
-    <div className="flex flex-col gap-6 bg-white shadow-md border border-slate-100 rounded-md p-4">
+    <div className="flex flex-col gap-6">
       <h2 className="text-xl font-bold">Edit Quiz</h2>
       <div className="flex flex-col gap-3 bg-[#f6f5f4] rounded-md p-4 border border-[#f6f5f4] shadow-sm">
         <h3 className="text-lg font-medium">How to use:</h3>
