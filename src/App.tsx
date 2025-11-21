@@ -4,10 +4,12 @@ import Preview from "./components/preview/Preview";
 import Results from "./components/results/Results";
 import { useQuizStorage } from "./hooks/useQuizStorage";
 import Editor from "./components/editor/Editor";
+import { useQuizLogic } from "./hooks/useQuizLogic";
 
 export default function App() {
   const [mode, setMode] = useState<"edit" | "preview" | "results">("edit");
   const { questions, saveQuestions } = useQuizStorage();
+  const { currentQuestionIndex, resetQuiz } = useQuizLogic(questions);
 
   const toggleMode = () => {
     const isPreviewState = mode === "preview" || mode === "results";
@@ -27,8 +29,9 @@ export default function App() {
           <button
             type="button"
             aria-pressed={mode === "edit" || mode === "preview"}
-            className="text-white bg-sky-600 border border-sky-600 px-3 py-1 rounded-md shadow-sm transition"
+            className="text-white bg-sky-600 disabled:bg-gray-300 disabled:border-gray-300 border border-sky-600 px-3 py-1 rounded-md shadow-sm transition"
             onClick={toggleMode}
+            disabled={questions.length === 0 && mode === "edit"}
           >
             {mode === "edit" ? "Preview" : "Edit"}
           </button>
@@ -54,7 +57,12 @@ export default function App() {
             onSaveQuiz={handleSaveQuiz}
           />
         )}
-        {mode === "preview" && <Preview />}
+        {mode === "preview" && (
+          <Preview
+            questions={questions}
+            currentQuestionIndex={currentQuestionIndex}
+          />
+        )}
         {mode === "results" && <Results />}
       </section>
     </main>
