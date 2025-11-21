@@ -30,13 +30,13 @@ export default function Editor({
   return (
     <div className="flex flex-col gap-6 bg-white shadow-md border border-slate-100 rounded-md p-4">
       <h2 className="text-xl font-bold">Edit Quiz</h2>
-      <div className="flex flex-col gap-3 bg-gray-100 rounded-md p-4 border border-gray-100 shadow-sm">
+      <div className="flex flex-col gap-3 bg-[#f6f5f4] rounded-md p-4 border border-[#f6f5f4] shadow-sm">
         <h3 className="text-lg font-medium">How to use:</h3>
         <ul>
           <li>Add questions and options using the buttons below</li>
           <li>
-            Click the <span>✓</span> button to mark the correct answer for each
-            question
+            Click the <Check size={16} /> button to mark the correct answer for
+            each question
           </li>
           <li>
             Questions with correct answers marked will show a green checkmark
@@ -69,7 +69,7 @@ export default function Editor({
                     id="questionTitle"
                     placeholder="Enter question title"
                     onChange={() => {}}
-                    className="text-sm shadow-sm border-gray-100 bg-gray-100 block w-full rounded-md p-2"
+                    className="text-sm shadow-sm border-[#f6f5f4] bg-[#f6f5f4] block w-full rounded-md p-2"
                   />
                 </div>
                 <div className="px-3">
@@ -85,13 +85,13 @@ export default function Editor({
                         id="questionOption"
                         value={""}
                         onChange={() => {}}
-                        className="text-sm shadow-sm border-gray-100 bg-gray-100 block w-full rounded-md p-2"
+                        className="text-sm shadow-sm border-[#f6f5f4] bg-[#f6f5f4] block w-full rounded-md p-2"
                         placeholder={`Option ${optionIndex + 1}`}
                       />
-                      <button className="inline-flex items-center justify-center rounded-md p-2 hover:bg-gray-100 transition">
+                      <button className="inline-flex items-center justify-center rounded-md p-2 hover:bg-[#f6f5f4] transition">
                         <Check size={16} />
                       </button>
-                      <button className="inline-flex items-center justify-center rounded-md p-2 hover:bg-gray-100 transition">
+                      <button className="inline-flex items-center justify-center rounded-md p-2 hover:bg-[#f6f5f4] transition">
                         <X size={16} />
                       </button>
                     </div>
@@ -100,13 +100,13 @@ export default function Editor({
                 <div className="flex gap-4 mt-4">
                   <button
                     type="button"
-                    className="text-[#0075de] flex items-center gap-1  text-sm font-medium  border border-[#0075de] px-3 py-1 rounded-md shadow-sm"
+                    className="text-[#0075de] flex items-center gap-1 text-sm border border-[#0075de] px-3 py-1 rounded-md shadow-sm"
                   >
                     Add Option
                   </button>
                   <button
                     type="submit"
-                    className="flex items-center gap-1 text-red-500 text-sm font-medium border border-red-500 px-3 py-1 rounded-md shadow-sm"
+                    className="flex text-white items-center gap-1 bg-red-500 text-sm border border-red-500 px-3 py-1 rounded-md shadow-sm"
                   >
                     Remove Question
                   </button>
