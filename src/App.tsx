@@ -9,7 +9,15 @@ import { useQuizLogic } from "./hooks/useQuizLogic";
 export default function App() {
   const [mode, setMode] = useState<"edit" | "preview" | "results">("edit");
   const { questions, saveQuestions } = useQuizStorage();
-  const { currentQuestionIndex, resetQuiz } = useQuizLogic(questions);
+  const {
+    currentQuestionIndex,
+    userAnswers,
+    isLastQuestion,
+    calculateScore,
+    handleAnswerSelect,
+    nextQuestion,
+    prevQuestion,
+  } = useQuizLogic(questions);
 
   const toggleMode = () => {
     const isPreviewState = mode === "preview" || mode === "results";
@@ -20,6 +28,10 @@ export default function App() {
     saveQuestions(questions);
     alert("Quiz saved to local storage!");
   };
+
+  const results = calculateScore();
+
+  console.log(results);
 
   return (
     <main className="min-h-screen p-8 max-w-4xl mx-auto">
@@ -57,12 +69,19 @@ export default function App() {
             onSaveQuiz={handleSaveQuiz}
           />
         )}
+
         {mode === "preview" && (
           <Preview
             questions={questions}
             currentQuestionIndex={currentQuestionIndex}
+            userAnswers={userAnswers}
+            isLastQuestion={isLastQuestion}
+            onAnswerSelect={handleAnswerSelect}
+            onNextQuestion={nextQuestion}
+            onPrevQuestion={prevQuestion}
           />
         )}
+
         {mode === "results" && <Results />}
       </section>
     </main>
