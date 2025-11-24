@@ -4,7 +4,7 @@ import { Question, QuizResults, UserAnswers } from "../types/type";
 export const useQuizLogic = (questions: Question[]) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState<UserAnswers>({});
-  const [mode, setMode] = useState<"edit" | "preview" | "results">("edit");
+
 
   const isLastQuestion = currentQuestionIndex === questions.length - 1;
 
@@ -55,14 +55,11 @@ export const useQuizLogic = (questions: Question[]) => {
   const resetQuiz = useCallback(() => {
     setCurrentQuestionIndex(0);
     setUserAnswers({});
-    setMode("preview");
   }, []);
 
   return {
     currentQuestionIndex,
     userAnswers,
-    mode,
-    setMode,
     isLastQuestion,
     calculateScore,
     handleAnswerSelect,
