@@ -17,6 +17,7 @@ export default function App() {
     handleAnswerSelect,
     nextQuestion,
     prevQuestion,
+    resetQuiz,
   } = useQuizLogic(questions);
 
   const toggleMode = () => {
@@ -31,7 +32,7 @@ export default function App() {
 
   const results = calculateScore();
 
-  console.log(results);
+  // console.log(results);
 
   return (
     <main className="min-h-screen p-8 max-w-4xl mx-auto">
@@ -50,9 +51,10 @@ export default function App() {
           <button
             type="button"
             aria-pressed={mode === "results"}
-            className="text-white bg-emerald-500 border border-emerald-500 rounded-md shadow-sm  px-3 py-1 transition"
+            className="text-white bg-emerald-500 border border-emerald-500 rounded-md shadow-sm  px-3 py-1 transition disabled:bg-gray-300 disabled:border-gray-300"
             onClick={() => setMode("results")}
             hidden={mode === "edit"}
+            disabled={!isLastQuestion}
           >
             Submit
           </button>
@@ -82,7 +84,14 @@ export default function App() {
           />
         )}
 
-        {mode === "results" && <Results />}
+        {mode === "results" && (
+          <Results
+            results={results}
+            questions={questions}
+            onRetryQuiz={resetQuiz}
+            onBackToEditor={() => setMode("edit")}
+          />
+        )}
       </section>
     </main>
   );
