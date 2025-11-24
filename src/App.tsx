@@ -32,6 +32,11 @@ export default function App() {
 
   const results = calculateScore();
 
+  const handleRetryQuiz = () => {
+    resetQuiz();
+    setMode("preview");
+  };
+
   // console.log(results);
 
   return (
@@ -88,7 +93,7 @@ export default function App() {
           <Results
             results={results}
             questions={questions}
-            onRetryQuiz={resetQuiz}
+            onRetryQuiz={handleRetryQuiz}
             onBackToEditor={() => setMode("edit")}
           />
         )}
