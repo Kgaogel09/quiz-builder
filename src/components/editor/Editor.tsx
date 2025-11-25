@@ -128,7 +128,10 @@ export default function Editor({
             <div key={index} className="flex mb-3">
               <div className="grow">
                 <div className="mb-4">
-                  <h5 className="font-medium mb-1">Question {index + 1}</h5>
+                  <h5 className="font-medium mb-1">
+                    Question {index + 1}{" "}
+                    <span className="text-red-500 text-xs">*</span>
+                  </h5>
                   <input
                     required
                     type="text"
