@@ -20,22 +20,27 @@ export default function Preview({
 }: QuizPreviewProps) {
   const currentQuestion = questions[currentQuestionIndex];
   const userAnswer = userAnswers[currentQuestionIndex];
+  const progressPercentage =
+    ((currentQuestionIndex + 1) / questions.length) * 100;
 
   return (
     <div className="flex flex-col gap-4">
       <h2 className="text-xl font-bold">Quiz Preview</h2>
-      <p className="text-slate-500">Take your quiz for a little test drive!</p>
+      <p className="text-slate-500 font-medium">
+        Take your quiz for a little test drive!
+      </p>
       <div className="flex flex-col gap-3">
         <p className="text-sm">
           Question {currentQuestionIndex + 1} of {questions.length}
         </p>
-        <div className="w-full bg-[#f6f5f4] rounded-full h-3">
+        <div
+          key={currentQuestionIndex}
+          className="w-full bg-[#f6f5f4] rounded-full h-3"
+        >
           <div
             className="bg-sky-600 h-3 rounded-full"
             style={{
-              width: `${
-                ((currentQuestionIndex + 1) / questions.length) * 100
-              }%`,
+              width: `${progressPercentage}%`,
             }}
           ></div>
         </div>
@@ -58,7 +63,7 @@ export default function Preview({
                 onClick={() => onAnswerSelect(currentQuestionIndex, index)}
               >
                 <span className="mr-2">{String.fromCharCode(65 + index)}.</span>
-                {option || `Option ${index + 1}`}
+                {option || `Untitled option ${index + 1}`}
               </button>
             </div>
           ))}
