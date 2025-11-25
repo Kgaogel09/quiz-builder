@@ -1,4 +1,4 @@
-import { Check, Plus, Save, TriangleAlert, X } from "lucide-react";
+import { Check, TriangleAlert, X } from "lucide-react";
 import { Question } from "../../types/type";
 
 interface QuizEditorProps {
@@ -90,7 +90,7 @@ export default function Editor({
   return (
     <div className="flex flex-col gap-4">
       <h2 className="text-xl font-bold">Quiz Editor</h2>
-      <p className="text-slate-500">
+      <p className="text-slate-500 font-medium">
         Craft your quiz magic, one question at a time.
       </p>
       <div className="flex flex-col gap-3 bg-[#f6f5f4] rounded-md p-4 border border-[#f6f5f4] shadow-sm">
@@ -125,7 +125,7 @@ export default function Editor({
           }}
         >
           {questions.map((question, index) => (
-            <div className="flex mb-3">
+            <div key={index} className="flex mb-3">
               <div className="grow">
                 <div className="mb-4">
                   <h5 className="font-medium mb-1">Question {index + 1}</h5>
@@ -144,7 +144,10 @@ export default function Editor({
                 <div className="px-3">
                   <h5 className="font-medium">Options:</h5>
                   {question.options.map((option, optionIndex) => (
-                    <div className="flex items-center mb-2 gap-2">
+                    <div
+                      key={optionIndex}
+                      className="flex items-center mb-2 gap-2"
+                    >
                       <span className="mr-2">
                         {String.fromCharCode(65 + optionIndex)}.
                       </span>
