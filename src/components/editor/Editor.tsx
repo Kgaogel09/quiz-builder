@@ -107,8 +107,8 @@ export default function Editor({
         </ul>
       </div>
       <div
-        className={`flex gap-2 items-center justify-center ${
-          !allQuestionsHaveAnswers && hasQuestions ? "" : "hidden"
+        className={`flex gap-2 items-center justify-center transition ${
+          !allQuestionsHaveAnswers && hasQuestions ? "flex" : "hidden"
         }`}
       >
         <TriangleAlert className="text-amber-400" />
@@ -130,6 +130,7 @@ export default function Editor({
                 <div className="mb-4">
                   <h5 className="font-medium mb-1">Question {index + 1}</h5>
                   <input
+                    required
                     type="text"
                     name="questionTitle"
                     id="questionTitle"
@@ -221,7 +222,8 @@ export default function Editor({
             </button>
             <button
               type="submit"
-              className="text-white bg-sky-600 border border-sky-600 px-3 py-1 rounded-md shadow-sm transition"
+              className="text-white bg-sky-600 border border-sky-600 px-3 py-1 rounded-md shadow-sm transition disabled:bg-gray-300 disabled:border-gray-300"
+              disabled={!allQuestionsHaveAnswers || !hasQuestions}
             >
               Save Quiz
             </button>
