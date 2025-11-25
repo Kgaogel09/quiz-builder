@@ -88,8 +88,11 @@ export default function Editor({
   };
 
   return (
-    <div className="flex flex-col gap-6">
-      <h2 className="text-xl font-bold">Edit Quiz</h2>
+    <div className="flex flex-col gap-4">
+      <h2 className="text-xl font-bold">Quiz Editor</h2>
+      <p className="text-slate-500">
+        Craft your quiz magic, one question at a time.
+      </p>
       <div className="flex flex-col gap-3 bg-[#f6f5f4] rounded-md p-4 border border-[#f6f5f4] shadow-sm">
         <h3 className="text-lg font-medium">How to use:</h3>
         <ul>
