@@ -22,8 +22,9 @@ export default function Preview({
   const userAnswer = userAnswers[currentQuestionIndex];
 
   return (
-    <div className="flex flex-col gap-6">
-      <h2 className="text-xl font-bold">Preview Quiz</h2>
+    <div className="flex flex-col gap-4">
+      <h2 className="text-xl font-bold">Quiz Preview</h2>
+      <p className="text-slate-500">Take your quiz for a little test drive!</p>
       <div className="flex flex-col gap-3">
         <p className="text-sm">
           Question {currentQuestionIndex + 1} of {questions.length}
