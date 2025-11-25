@@ -20,6 +20,11 @@ export default function App() {
     resetQuiz,
   } = useQuizLogic(questions);
 
+  const allQuestionsHaveAnswers = questions.every(
+    (q) => q.correctAnswer !== -1
+  );
+  const hasQuestions = questions.length > 0;
+
   const toggleMode = () => {
     const isPreviewState = mode === "preview" || mode === "results";
     setMode(isPreviewState ? "edit" : "preview");
@@ -43,11 +48,11 @@ export default function App() {
         <h1 className="text-2xl font-bold">Accessible Quiz Builder (React)</h1>
         <div className="space-x-2">
           <button
-            type="button"
+            type="submit"
             aria-pressed={mode === "edit" || mode === "preview"}
             className="text-white bg-sky-600 disabled:bg-gray-300 disabled:border-gray-300 border border-sky-600 px-3 py-1 rounded-md shadow-sm transition"
             onClick={toggleMode}
-            disabled={questions.length === 0 && mode === "edit"}
+            disabled={!allQuestionsHaveAnswers || !hasQuestions}
           >
             {mode === "edit" ? "Preview" : "Back to Editor"}
           </button>
