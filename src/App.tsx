@@ -37,8 +37,6 @@ export default function App() {
     setMode("preview");
   };
 
-  // console.log(results);
-
   return (
     <main className="min-h-screen p-8 max-w-4xl mx-auto">
       <header className="flex items-center justify-between mb-6">
@@ -51,14 +49,14 @@ export default function App() {
             onClick={toggleMode}
             disabled={questions.length === 0 && mode === "edit"}
           >
-            {mode === "edit" ? "Preview" : "Edit"}
+            {mode === "edit" ? "Preview" : "Back to Editor"}
           </button>
           <button
             type="button"
             aria-pressed={mode === "results"}
             className="text-white bg-emerald-500 border border-emerald-500 rounded-md shadow-sm  px-3 py-1 transition disabled:bg-gray-300 disabled:border-gray-300"
             onClick={() => setMode("results")}
-            hidden={mode === "edit"}
+            hidden={mode === "edit" || mode === "results"}
             disabled={!isLastQuestion}
           >
             Submit
@@ -94,7 +92,6 @@ export default function App() {
             results={results}
             questions={questions}
             onRetryQuiz={handleRetryQuiz}
-            onBackToEditor={() => setMode("edit")}
           />
         )}
       </section>
