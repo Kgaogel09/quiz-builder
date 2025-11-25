@@ -15,20 +15,19 @@ export default function Results({
   const { score, total, percentage, details } = results;
 
   const getPerformanceData = (percentage: number) => {
-    if (percentage >= 90) {
+    if (percentage >= 90)
       return { message: "Excellent!", icon: <PartyPopper size={40} /> };
-    } else if (percentage >= 70) {
+    if (percentage >= 70)
       return { message: "Good job!", icon: <ThumbsUp size={40} /> };
-    } else if (percentage >= 50) {
+    if (percentage >= 50)
       return { message: "Not bad!", icon: <Smile size={40} /> };
-    } else {
-      return { message: "Keep practicing!", icon: <BicepsFlexed size={40} /> };
-    }
+    return { message: "Keep practicing!", icon: <BicepsFlexed size={40} /> };
   };
 
   const performance = getPerformanceData(percentage);
 
   const getScoreColor = (percent: number) => {
+    if (percent >= 90) return "text-green-500";
     if (percent >= 70) return "text-green-500";
     if (percent >= 50) return "text-amber-400";
     return "text-red-500";
@@ -80,7 +79,7 @@ export default function Results({
           return (
             <div
               key={index}
-              className={`result-item border border-[#f6f5f4] bg-[#f6f5f4] p-3 mb-6 rounded-md`}
+              className={`border border-[#f6f5f4] bg-[#f6f5f4] p-3 mb-6 rounded-md`}
             >
               <div className="flex justify-between items-start">
                 <div className="grow">
