@@ -25,3 +25,13 @@ export interface QuizResults {
     isCorrect: boolean;
   }[];
 }
+
+export interface ModalState {
+  isOpen: boolean;
+  title: string;
+  content: string;
+  confirmText?: string;
+  cancelText?: string;
+  type?: "danger" | "warning" | "info";
+  onConfirm: () => void;
+}
