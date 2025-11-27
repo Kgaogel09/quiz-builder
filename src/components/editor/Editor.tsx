@@ -263,21 +263,21 @@ export default function Editor({
                   <div className="flex gap-4 mt-4">
                     <button
                       type="button"
-                      className="text-sky-600 font-medium flex items-center gap-1 text-sm border border-sky-600 px-3 py-1 rounded-md shadow-sm transition"
+                      className="text-sky-600 font-medium flex items-center gap-1 text-sm border border-sky-600 px-3 py-1 rounded-md shadow-sm transition hover:bg-sky-500/5 hover:border-sky-500/5"
                       onClick={() => addOption(index)}
                     >
                       Add Option
                     </button>
                     <button
                       type="button"
-                      className="flex text-emerald-500 font-medium items-center gap-1 text-sm border border-emerald-500 px-3 py-1 rounded-md shadow-sm transition"
+                      className="flex text-emerald-500 font-medium items-center gap-1 text-sm border border-emerald-500 px-3 py-1 rounded-md shadow-sm transition hover:bg-emerald-500/5 hover:border-emerald-500/5"
                       onClick={() => duplicateQuestion(index)}
                     >
                       Duplicate Question
                     </button>
                     <button
                       type="button"
-                      className="flex text-red-500 font-medium text items-center gap-1 text-sm border border-red-500 px-3 py-1 rounded-md shadow-sm transition"
+                      className="flex text-red-500 font-medium text items-center gap-1 text-sm border border-red-500 px-3 py-1 rounded-md shadow-sm transition hover:bg-red-500/5 hover:border-red-500/5"
                       onClick={() => removeQuestion(index)}
                     >
                       Remove Question
