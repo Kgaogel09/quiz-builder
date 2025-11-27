@@ -87,6 +87,17 @@ export default function Editor({
     onQuestionsUpdate(newQuestions);
   };
 
+  const duplicateQuestion = (index: number) => {
+    const questionToDuplicate = questions[index];
+    const duplicatedQuestion: Question = {
+      ...questionToDuplicate,
+      id: Date.now().toString(),
+    };
+    const newQuestions = [...questions];
+    newQuestions.splice(index + 1, 0, duplicatedQuestion);
+    onQuestionsUpdate(newQuestions);
+  };
+
   return (
     <div className="flex flex-col gap-4">
       <h2 className="text-xl font-bold">Quiz Editor</h2>
@@ -206,10 +217,17 @@ export default function Editor({
                   </button>
                   <button
                     type="button"
-                    className="flex text-white items-center gap-1 bg-red-500 text-sm border border-red-500 px-3 py-1 rounded-md shadow-sm transition"
+                    className="flex text-red-500 items-center gap-1 text-sm border border-red-500 px-3 py-1 rounded-md shadow-sm transition"
                     onClick={() => removeQuestion(index)}
                   >
                     Remove Question
+                  </button>
+                  <button
+                    type="button"
+                    className="flex text-emerald-500 items-center gap-1 text-sm border border-emerald-500 px-3 py-1 rounded-md shadow-sm transition"
+                    onClick={() => duplicateQuestion(index)}
+                  >
+                    Duplicate Question
                   </button>
                 </div>
               </div>
