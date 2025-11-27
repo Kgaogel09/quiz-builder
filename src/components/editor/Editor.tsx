@@ -1,5 +1,7 @@
 import { Check, TriangleAlert, X } from "lucide-react";
-import { Question } from "../../types/type";
+import { ModalState, Question } from "../../types/type";
+import { useState } from "react";
+import Modal from "../modal/modal";
 
 interface QuizEditorProps {
   questions: Question[];
@@ -12,10 +14,24 @@ export default function Editor({
   onQuestionsUpdate,
   onSaveQuiz,
 }: QuizEditorProps) {
+  const [modalState, setModalState] = useState<ModalState>({
+    isOpen: false,
+    title: "",
+    content: "",
+    onConfirm: () => {},
+  });
   const allQuestionsHaveAnswers = questions.every(
     (q) => q.correctAnswer !== -1
   );
   const hasQuestions = questions.length > 0;
+
+  const showModal = (modalConfig: Omit<ModalState, "isOpen">) => {
+    setModalState({ ...modalConfig, isOpen: true });
+  };
+
+  const hideModal = () => {
+    setModalState((prev) => ({ ...prev, isOpen: false }));
+  };
 
   const addQuestion = () => {
     const newQuestion: Question = {
@@ -49,18 +65,33 @@ export default function Editor({
     onQuestionsUpdate(newQuestions);
   };
 
-  const addOption = (questionIndex: number) => {
-    const newQuestions = [...questions];
-    newQuestions[questionIndex] = {
-      ...newQuestions[questionIndex],
-      options: [...newQuestions[questionIndex].options, ""],
-    };
-    onQuestionsUpdate(newQuestions);
+  const removeQuestion = (index: number) => {
+    showModal({
+      title: "Remove Question",
+      content:
+        "Are you sure you want to remove this question? This action cannot be undone.",
+      confirmText: "Remove",
+      onConfirm: () => {
+        const newQuestions = questions.filter((_, i) => i !== index);
+        onQuestionsUpdate(newQuestions);
+      },
+    });
   };
 
-  const removeQuestion = (index: number) => {
-    const newQuestions = questions.filter((_, i) => i !== index);
-    onQuestionsUpdate(newQuestions);
+  const addOption = (questionIndex: number) => {
+    showModal({
+      title: "Add Option",
+      content: "Are you sure you want to add a new option to this question?",
+      confirmText: "Add Option",
+      onConfirm: () => {
+        const newQuestions = [...questions];
+        newQuestions[questionIndex] = {
+          ...newQuestions[questionIndex],
+          options: [...newQuestions[questionIndex].options, ""],
+        };
+        onQuestionsUpdate(newQuestions);
+      },
+    });
   };
 
   const setCorrectAnswer = (questionIndex: number, optionIndex: number) => {
@@ -88,168 +119,191 @@ export default function Editor({
   };
 
   const duplicateQuestion = (index: number) => {
-    const questionToDuplicate = questions[index];
-    const duplicatedQuestion: Question = {
-      ...questionToDuplicate,
-      id: Date.now().toString(),
-    };
-    const newQuestions = [...questions];
-    newQuestions.splice(index + 1, 0, duplicatedQuestion);
-    onQuestionsUpdate(newQuestions);
+    showModal({
+      title: "Duplicate Question",
+      content: "Are you sure you want to duplicate this question?",
+      confirmText: "Duplicate",
+      onConfirm: () => {
+        const questionToDuplicate = questions[index];
+        const duplicatedQuestion: Question = {
+          ...questionToDuplicate,
+          id: Date.now().toString(),
+        };
+        const newQuestions = [...questions];
+        newQuestions.splice(index + 1, 0, duplicatedQuestion);
+        onQuestionsUpdate(newQuestions);
+      },
+    });
   };
 
   return (
-    <div className="flex flex-col gap-4">
-      <h2 className="text-xl font-bold">Quiz Editor</h2>
-      <p className="text-slate-500 font-medium">
-        Craft your quiz magic, one question at a time.
-      </p>
-      <div className="flex flex-col gap-3 bg-[#f6f5f4] rounded-md p-4 border border-[#f6f5f4] shadow-sm">
-        <h3 className="text-lg font-medium">How to use:</h3>
-        <ul>
-          <li>Add questions and options using the buttons below</li>
-          <li>
-            Click the <Check size={16} /> button to mark the correct answer for
-            each question
-          </li>
-          <li>
-            Questions with correct answers marked will show a green checkmark
-          </li>
-        </ul>
-      </div>
-      <div
-        className={`flex gap-2 items-center justify-center transition ${
-          !allQuestionsHaveAnswers && hasQuestions ? "flex" : "hidden"
-        }`}
-      >
-        <TriangleAlert className="text-amber-400" />
-        <span className="text-amber-400">
-          Some questions missing correct answers
-        </span>
-      </div>
+    <div>
+      <Modal
+        showModal={modalState.isOpen}
+        onClose={hideModal}
+        onConfirm={modalState.onConfirm}
+        title={modalState.title}
+        content={modalState.content}
+        confirmText={modalState.confirmText}
+        cancelText={modalState.cancelText}
+      />
 
-      <div>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            onSaveQuiz();
-          }}
+      <div className="flex flex-col gap-4">
+        <h2 className="text-xl font-bold">Quiz Editor</h2>
+        <p className="text-slate-500 font-medium">
+          Craft your quiz magic, one question at a time.
+        </p>
+        <div className="flex flex-col gap-3 bg-[#f6f5f4] rounded-md p-4 border border-[#f6f5f4] shadow-sm">
+          <h3 className="text-lg font-medium">How to use:</h3>
+          <ul>
+            <li>Add questions and options using the buttons below</li>
+            <li>
+              Click the
+              <Check
+                className="text-white border rounded-md border-emerald-500 mx-1 bg-emerald-500"
+                size={16}
+              />
+              button to mark the correct answer for each question
+            </li>
+            <li>
+              Questions with correct answers marked will show a green checkmark
+            </li>
+          </ul>
+        </div>
+        <div
+          className={`flex gap-2 items-center justify-center transition ${
+            !allQuestionsHaveAnswers && hasQuestions ? "flex" : "hidden"
+          }`}
         >
-          {questions.map((question, index) => (
-            <div key={index} className="flex mb-3">
-              <div className="grow">
-                <div className="mb-4">
-                  <h5 className="font-medium mb-1">
-                    Question {index + 1}{" "}
-                    <span className="text-red-500 text-xs">*</span>
-                  </h5>
-                  <input
-                    required
-                    type="text"
-                    name="questionTitle"
-                    id="questionTitle"
-                    placeholder="Enter question title"
-                    value={question.title}
-                    onChange={(e) =>
-                      updateQuestion(index, "title", e.target.value)
-                    }
-                    className="text-sm shadow-sm border-[#f6f5f4] bg-[#f6f5f4] block w-full rounded-md p-2"
-                  />
-                </div>
-                <div className="px-3">
-                  <h5 className="font-medium">Options:</h5>
-                  {question.options.map((option, optionIndex) => (
-                    <div
-                      key={optionIndex}
-                      className="flex items-center mb-2 gap-2"
-                    >
-                      <span className="mr-2">
-                        {String.fromCharCode(65 + optionIndex)}.
-                      </span>
-                      <input
-                        type="text"
-                        name="questionOption"
-                        id="questionOption"
-                        value={option}
-                        onChange={(e) =>
-                          updateOption(index, optionIndex, e.target.value)
-                        }
-                        className="text-sm shadow-sm border-[#f6f5f4] bg-[#f6f5f4] block w-full rounded-md p-2"
-                        placeholder={`Option ${optionIndex + 1}`}
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setCorrectAnswer(index, optionIndex)}
-                        className={`border border-emerald-600 inline-flex items-center justify-center rounded-md p-2 transition ${
-                          question.correctAnswer === optionIndex
-                            ? "bg-emerald-600"
-                            : "bg-white"
-                        }`}
+          <TriangleAlert className="text-amber-400" />
+          <span className="text-amber-400">
+            Some questions missing correct answers
+          </span>
+        </div>
+
+        <div>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              onSaveQuiz();
+            }}
+          >
+            {questions.map((question, index) => (
+              <div key={index} className="flex mb-3">
+                <div className="grow">
+                  <div className="mb-4">
+                    <h5 className="font-medium mb-1">
+                      Question {index + 1}
+                      <span className="text-red-500 text-xs">*</span>
+                    </h5>
+                    <input
+                      required
+                      type="text"
+                      name="questionTitle"
+                      id="questionTitle"
+                      placeholder="Enter question title"
+                      value={question.title}
+                      onChange={(e) =>
+                        updateQuestion(index, "title", e.target.value)
+                      }
+                      className="text-sm shadow-sm border-[#f6f5f4] bg-[#f6f5f4] block w-full rounded-md p-2"
+                    />
+                  </div>
+                  <div className="px-3">
+                    <h5 className="font-medium">Options:</h5>
+                    {question.options.map((option, optionIndex) => (
+                      <div
+                        key={optionIndex}
+                        className="flex items-center mb-2 gap-2"
                       >
-                        <Check
-                          size={14}
-                          className={`${
-                            question.correctAnswer !== optionIndex
-                              ? "text-emerald-600"
-                              : "text-white"
-                          }`}
+                        <span className="mr-2">
+                          {String.fromCharCode(65 + optionIndex)}.
+                        </span>
+                        <input
+                          type="text"
+                          name="questionOption"
+                          id="questionOption"
+                          value={option}
+                          onChange={(e) =>
+                            updateOption(index, optionIndex, e.target.value)
+                          }
+                          className="text-sm shadow-sm border-[#f6f5f4] bg-[#f6f5f4] block w-full rounded-md p-2"
+                          placeholder={`Option ${optionIndex + 1}`}
                         />
-                      </button>
-                      {question.options.length > 2 && (
                         <button
                           type="button"
-                          onClick={() => removeOption(index, optionIndex)}
-                          className="border border-red-500 inline-flex items-center justify-center rounded-md p-2 transition"
+                          onClick={() => setCorrectAnswer(index, optionIndex)}
+                          className={`border border-emerald-500 inline-flex items-center justify-center rounded-md p-2 transition ${
+                            question.correctAnswer === optionIndex
+                              ? "bg-emerald-500/80"
+                              : "bg-white"
+                          }`}
                         >
-                          <X size={14} className="text-red-500" />
+                          <Check
+                            size={14}
+                            className={`${
+                              question.correctAnswer !== optionIndex
+                                ? "text-emerald-700"
+                                : "text-white"
+                            }`}
+                          />
                         </button>
-                      )}
-                    </div>
-                  ))}
-                </div>
-                <div className="flex gap-4 mt-4">
-                  <button
-                    type="button"
-                    className="text-sky-600 flex items-center gap-1 text-sm border border-sky-600 px-3 py-1 rounded-md shadow-sm transition"
-                    onClick={() => addOption(index)}
-                  >
-                    Add Option
-                  </button>
-                  <button
-                    type="button"
-                    className="flex text-red-500 items-center gap-1 text-sm border border-red-500 px-3 py-1 rounded-md shadow-sm transition"
-                    onClick={() => removeQuestion(index)}
-                  >
-                    Remove Question
-                  </button>
-                  <button
-                    type="button"
-                    className="flex text-emerald-500 items-center gap-1 text-sm border border-emerald-500 px-3 py-1 rounded-md shadow-sm transition"
-                    onClick={() => duplicateQuestion(index)}
-                  >
-                    Duplicate Question
-                  </button>
+                        {question.options.length > 2 && (
+                          <button
+                            type="button"
+                            onClick={() => removeOption(index, optionIndex)}
+                            className="border border-red-500 inline-flex items-center justify-center rounded-md p-2 transition"
+                          >
+                            <X size={14} className="text-red-500" />
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex gap-4 mt-4">
+                    <button
+                      type="button"
+                      className="text-sky-600 font-medium flex items-center gap-1 text-sm border border-sky-600 px-3 py-1 rounded-md shadow-sm transition"
+                      onClick={() => addOption(index)}
+                    >
+                      Add Option
+                    </button>
+                    <button
+                      type="button"
+                      className="flex text-emerald-500 font-medium items-center gap-1 text-sm border border-emerald-500 px-3 py-1 rounded-md shadow-sm transition"
+                      onClick={() => duplicateQuestion(index)}
+                    >
+                      Duplicate Question
+                    </button>
+                    <button
+                      type="button"
+                      className="flex text-red-500 font-medium text items-center gap-1 text-sm border border-red-500 px-3 py-1 rounded-md shadow-sm transition"
+                      onClick={() => removeQuestion(index)}
+                    >
+                      Remove Question
+                    </button>
+                  </div>
                 </div>
               </div>
+            ))}
+            <div className="flex justify-end gap-4 mt-4">
+              <button
+                type="button"
+                className="text-white bg-emerald-500 border border-emerald-500 rounded-md shadow-sm  px-3 py-1 transition"
+                onClick={addQuestion}
+              >
+                Add Question
+              </button>
+              <button
+                type="submit"
+                className="text-white bg-sky-600 border border-sky-600 px-3 py-1 rounded-md shadow-sm transition disabled:bg-gray-300 disabled:border-gray-300"
+                disabled={!allQuestionsHaveAnswers || !hasQuestions}
+              >
+                Save Quiz
+              </button>
             </div>
-          ))}
-          <div className="flex justify-end gap-4 mt-4">
-            <button
-              type="button"
-              className="text-white bg-emerald-500 border border-emerald-500 rounded-md shadow-sm  px-3 py-1 transition"
-              onClick={addQuestion}
-            >
-              Add Question
-            </button>
-            <button
-              type="submit"
-              className="text-white bg-sky-600 border border-sky-600 px-3 py-1 rounded-md shadow-sm transition disabled:bg-gray-300 disabled:border-gray-300"
-              disabled={!allQuestionsHaveAnswers || !hasQuestions}
-            >
-              Save Quiz
-            </button>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   );
