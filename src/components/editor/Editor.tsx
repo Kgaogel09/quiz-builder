@@ -151,7 +151,7 @@ export default function Editor({
       <p className="text-slate-500 font-medium">
         Craft your quiz magic, one question at a time.
       </p>
-      <div className="flex flex-col gap-3 bg-[#f6f5f4] rounded-md p-4 border border-[#f6f5f4] shadow-sm">
+      <div className="flex flex-col gap-3 bg-[#f6f5f4] rounded-md p-4 border border-[#f6f5f4] shadow-md">
         <h3 className="text-lg font-medium">How to use:</h3>
         <ul>
           <li>Add questions and options using the buttons below</li>
@@ -188,7 +188,7 @@ export default function Editor({
         >
           {questions.map((question, index) => (
             <div key={index} className="flex mb-3">
-              <div className="grow">
+              <div className="grow mb-6 p-4 border border-[#f6f5f4] rounded-md shadow-md">
                 <div className="mb-4">
                   <h5 className="font-medium mb-1">
                     Question {index + 1}
@@ -204,7 +204,7 @@ export default function Editor({
                     onChange={(e) =>
                       updateQuestion(index, "title", e.target.value)
                     }
-                    className="text-sm shadow-sm border-[#f6f5f4] bg-[#f6f5f4] block w-full rounded-md p-2"
+                    className="text-sm shadow-md border-[#f6f5f4] bg-[#f6f5f4] block w-full rounded-md p-2"
                   />
                 </div>
                 <div className="px-3">
@@ -212,7 +212,7 @@ export default function Editor({
                   {question.options.map((option, optionIndex) => (
                     <div
                       key={optionIndex}
-                      className="flex items-center mb-2 gap-2"
+                      className="flex items-center mb-3 gap-2"
                     >
                       <span className="mr-2">
                         {String.fromCharCode(65 + optionIndex)}.
@@ -225,13 +225,13 @@ export default function Editor({
                         onChange={(e) =>
                           updateOption(index, optionIndex, e.target.value)
                         }
-                        className="text-sm shadow-sm border-[#f6f5f4] bg-[#f6f5f4] block w-full rounded-md p-2"
+                        className="text-sm shadow-md border-[#f6f5f4] bg-[#f6f5f4] block w-full rounded-md p-2"
                         placeholder={`Option ${optionIndex + 1}`}
                       />
                       <button
                         type="button"
                         onClick={() => setCorrectAnswer(index, optionIndex)}
-                        className={`border border-emerald-500 inline-flex items-center justify-center rounded-md p-2 transition ${
+                        className={`border border-emerald-500 inline-flex items-center justify-center rounded-md p-2 transition shadow-md ${
                           question.correctAnswer === optionIndex
                             ? "bg-emerald-500/80"
                             : "bg-white"
@@ -250,7 +250,7 @@ export default function Editor({
                         <button
                           type="button"
                           onClick={() => removeOption(index, optionIndex)}
-                          className="border border-red-500 inline-flex items-center justify-center rounded-md p-2 transition"
+                          className="border border-red-500 inline-flex items-center justify-center rounded-md p-2 transition shadow-md"
                         >
                           <X size={14} className="text-red-500" />
                         </button>
@@ -261,21 +261,21 @@ export default function Editor({
                 <div className="flex gap-4 mt-4">
                   <button
                     type="button"
-                    className="text-sky-600 font-medium flex items-center gap-1 text-sm border border-sky-600 px-3 py-1 rounded-md shadow-sm transition hover:bg-sky-500/5 hover:border-sky-500/5"
+                    className="text-sky-600 font-medium flex items-center gap-1 text-sm border border-sky-600 px-3 py-1 rounded-md shadow-md transition-all duration-300 ease-in hover:bg-sky-500/5 hover:border-sky-500/5"
                     onClick={() => addOption(index)}
                   >
                     Add Option
                   </button>
                   <button
                     type="button"
-                    className="flex text-emerald-500 font-medium items-center gap-1 text-sm border border-emerald-500 px-3 py-1 rounded-md shadow-sm transition hover:bg-emerald-500/5 hover:border-emerald-500/5"
+                    className="flex text-emerald-500 font-medium items-center gap-1 text-sm border border-emerald-500 px-3 py-1 rounded-md shadow-md transition-all duration-300 ease-in hover:bg-emerald-500/5 hover:border-emerald-500/5"
                     onClick={() => duplicateQuestion(index)}
                   >
                     Duplicate Question
                   </button>
                   <button
                     type="button"
-                    className="flex text-red-500 font-medium text items-center gap-1 text-sm border border-red-500 px-3 py-1 rounded-md shadow-sm transition hover:bg-red-500/5 hover:border-red-500/5"
+                    className="flex text-red-500 font-medium text items-center gap-1 text-sm border border-red-500 px-3 py-1 rounded-md shadow-md transition-all duration-300 ease-in hover:bg-red-500/5 hover:border-red-500/5"
                     onClick={() => removeQuestion(index)}
                   >
                     Remove Question
@@ -287,14 +287,14 @@ export default function Editor({
           <div className="flex justify-end gap-4 mt-4">
             <button
               type="button"
-              className="text-white bg-emerald-500 border border-emerald-500 rounded-md shadow-sm  px-3 py-1 transition"
+              className="text-white bg-emerald-500 font-medium text-sm border border-emerald-500 px-3 py-1 rounded-md shadow-md transition-all duration-300 ease-in hover:bg-emerald-500/5 hover:text-emerald-500"
               onClick={addQuestion}
             >
               Add Question
             </button>
             <button
               type="submit"
-              className="text-white bg-sky-600 border border-sky-600 px-3 py-1 rounded-md shadow-sm transition disabled:bg-gray-300 disabled:border-gray-300"
+              className="text-white bg-sky-600 font-medium text-sm border border-sky-600 px-3 py-1 rounded-md shadow-md transition-all duration-300 ease-in hover:bg-sky-600/5 hover:text-sky-600 disabled:bg-gray-300 disabled:border-gray-300"
               disabled={!allQuestionsHaveAnswers || !hasQuestions}
             >
               Save Quiz
