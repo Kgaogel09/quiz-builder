@@ -40,7 +40,7 @@ export default function Results({
         Drumroll… here’s how you did!
       </p>
       <div className="flex items-center justify-between gap-4">
-        <div className="flex flex-col flex-1 gap-3 bg-[#f6f5f4] rounded-md p-4 border border-[#f6f5f4] shadow-sm text-center">
+        <div className="flex flex-col flex-1 gap-3 bg-[#f6f5f4] rounded-md p-4 border border-[#f6f5f4] shadow-md text-center">
           <h4 className="text-xl font-medium">Final Score</h4>
           <h2
             className={`text-4xl font-medium ${getScoreColor(percentage)}
@@ -49,7 +49,7 @@ export default function Results({
             {percentage}%
           </h2>
         </div>
-        <div className="flex flex-col flex-1 gap-3 bg-[#f6f5f4] rounded-md p-4 border border-[#f6f5f4] shadow-sm text-center">
+        <div className="flex flex-col flex-1 gap-3 bg-[#f6f5f4] rounded-md p-4 border border-[#f6f5f4] shadow-md text-center">
           <h4 className="text-xl font-medium">Correct Answers</h4>
           <h2
             className={`text-4xl font-medium ${getScoreColor(percentage)}
@@ -58,7 +58,7 @@ export default function Results({
             {score}/{total}
           </h2>
         </div>
-        <div className="flex flex-col flex-1 gap-3 bg-[#f6f5f4] rounded-md p-4 border border-[#f6f5f4] shadow-sm text-center">
+        <div className="flex flex-col flex-1 gap-3 bg-[#f6f5f4] rounded-md p-4 border border-[#f6f5f4] shadow-md text-center">
           <h4 className="text-xl font-medium">{performance.message}</h4>
           <h2
             className={`text-4xl font-medium ${getScoreColor(percentage)}
@@ -112,7 +112,7 @@ export default function Results({
                   </div>
                 </div>
                 <span
-                  className={`text-white px-2 py-1 text-xs rounded-xl shadow-sm ${
+                  className={`text-white px-2 py-1 text-xs rounded-xl shadow-md ${
                     detail.isCorrect ? "bg-emerald-500" : "bg-red-500"
                   } ml-3`}
                 >
@@ -126,7 +126,7 @@ export default function Results({
       <div className="flex justify-end gap-4 mt-4">
         <button
           type="button"
-          className="text-white bg-[#191918] border border-[#191918] rounded-md shadow-sm  px-3 py-1 transition"
+          className="text-white bg-[#191918] border border-[#191918] rounded-md shadow-md  px-3 py-1 transition-all duration-300 ease-in"
           onClick={onRetryQuiz}
         >
           Retry Quiz
