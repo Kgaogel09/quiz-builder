@@ -50,7 +50,8 @@ export default function App() {
           <button
             type="submit"
             aria-pressed={mode === "edit" || mode === "preview"}
-            className="text-white bg-sky-600 disabled:bg-gray-300 disabled:border-gray-300 border border-sky-600 px-3 py-1 rounded-md shadow-sm transition"
+            className="text-white bg-sky-600 font-medium text-sm border border-sky-600 px-3 py-1 rounded-md shadow-md 
+             hover:bg-sky-600/5 hover:text-sky-600 disabled:bg-gray-300 disabled:border-gray-300"
             onClick={toggleMode}
             disabled={!allQuestionsHaveAnswers || !hasQuestions}
           >
@@ -59,7 +60,7 @@ export default function App() {
           <button
             type="button"
             aria-pressed={mode === "results"}
-            className="text-white bg-emerald-500 border border-emerald-500 rounded-md shadow-sm  px-3 py-1 transition disabled:bg-gray-300 disabled:border-gray-300"
+            className="text-white bg-emerald-500 font-medium text-sm border border-emerald-500 px-3 py-1 rounded-md shadow-md transition-all duration-300 ease-in hover:bg-emerald-500/5 hover:text-emerald-500 disabled:bg-gray-300 disabled:border-gray-300"
             onClick={() => setMode("results")}
             hidden={mode === "edit" || mode === "results"}
             disabled={!isLastQuestion}
