@@ -46,16 +46,16 @@ export default function Preview({
         </div>
       </div>
 
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col mb-10">
         <h5 className="mb-3 font-medium text-lg">
           {currentQuestion.title || "Untitled Question"}
         </h5>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-3">
           {currentQuestion.options.map((option, index) => (
             <div key={index} className="">
               <button
                 type="button"
-                className={`w-full text-left text-sm shadow-sm  bg-[#f6f5f4] block rounded-md p-2 ${
+                className={`w-full text-left text-sm shadow-md  bg-[#f6f5f4] block rounded-md p-2 ${
                   userAnswer !== index
                     ? "border border-[#f6f5f4]"
                     : "border-2 border-sky-600 bg-sky-100"
@@ -70,10 +70,10 @@ export default function Preview({
         </div>
       </div>
       {questions.length > 1 && (
-        <div className="flex justify-between gap-4">
+        <div className="flex justify-between">
           <button
             type="button"
-            className="text-white bg-[#191918] border border-[#191918] rounded-md shadow-sm  px-3 py-1 transition disabled:bg-gray-300 disabled:border-gray-300"
+            className="text-white bg-[#191918] font-medium text-sm border border-[#191918] px-3 py-1 rounded-md shadow-md transition-all duration-300 ease-in disabled:bg-gray-300 disabled:border-gray-300"
             onClick={onPrevQuestion}
             disabled={currentQuestionIndex === 0}
           >
@@ -82,7 +82,7 @@ export default function Preview({
 
           <button
             type="button"
-            className="text-white bg-[#191918] border border-[#191918] rounded-md shadow-sm  px-3 py-1 transition disabled:bg-gray-300 disabled:border-gray-300"
+            className="text-white bg-[#191918] font-medium text-sm border border-[#191918] px-3 py-1 rounded-md shadow-md transition-all duration-300 ease-in disabled:bg-gray-300 disabled:border-gray-300"
             onClick={onNextQuestion}
             disabled={isLastQuestion}
           >
