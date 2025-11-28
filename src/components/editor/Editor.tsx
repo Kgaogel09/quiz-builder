@@ -137,7 +137,7 @@ export default function Editor({
   };
 
   return (
-    <div>
+    <div className="flex flex-col gap-4">
       <Modal
         showModal={modalState.isOpen}
         onClose={hideModal}
@@ -147,163 +147,160 @@ export default function Editor({
         confirmText={modalState.confirmText}
         cancelText={modalState.cancelText}
       />
+      <h2 className="text-xl font-bold">Quiz Editor</h2>
+      <p className="text-slate-500 font-medium">
+        Craft your quiz magic, one question at a time.
+      </p>
+      <div className="flex flex-col gap-3 bg-[#f6f5f4] rounded-md p-4 border border-[#f6f5f4] shadow-sm">
+        <h3 className="text-lg font-medium">How to use:</h3>
+        <ul>
+          <li>Add questions and options using the buttons below</li>
+          <li>
+            Click the
+            <Check
+              className="text-white border rounded-md border-emerald-500 mx-1 bg-emerald-500"
+              size={16}
+            />
+            button to mark the correct answer for each question
+          </li>
+          <li>
+            Questions with correct answers marked will show a green checkmark
+          </li>
+        </ul>
+      </div>
+      <div
+        className={`flex gap-2 items-center justify-center transition ${
+          !allQuestionsHaveAnswers && hasQuestions ? "flex" : "hidden"
+        }`}
+      >
+        <TriangleAlert className="text-amber-400" />
+        <span className="text-amber-400">
+          Some questions missing correct answers
+        </span>
+      </div>
 
-      <div className="flex flex-col gap-4">
-        <h2 className="text-xl font-bold">Quiz Editor</h2>
-        <p className="text-slate-500 font-medium">
-          Craft your quiz magic, one question at a time.
-        </p>
-        <div className="flex flex-col gap-3 bg-[#f6f5f4] rounded-md p-4 border border-[#f6f5f4] shadow-sm">
-          <h3 className="text-lg font-medium">How to use:</h3>
-          <ul>
-            <li>Add questions and options using the buttons below</li>
-            <li>
-              Click the
-              <Check
-                className="text-white border rounded-md border-emerald-500 mx-1 bg-emerald-500"
-                size={16}
-              />
-              button to mark the correct answer for each question
-            </li>
-            <li>
-              Questions with correct answers marked will show a green checkmark
-            </li>
-          </ul>
-        </div>
-        <div
-          className={`flex gap-2 items-center justify-center transition ${
-            !allQuestionsHaveAnswers && hasQuestions ? "flex" : "hidden"
-          }`}
+      <div>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            onSaveQuiz();
+          }}
         >
-          <TriangleAlert className="text-amber-400" />
-          <span className="text-amber-400">
-            Some questions missing correct answers
-          </span>
-        </div>
-
-        <div>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              onSaveQuiz();
-            }}
-          >
-            {questions.map((question, index) => (
-              <div key={index} className="flex mb-3">
-                <div className="grow">
-                  <div className="mb-4">
-                    <h5 className="font-medium mb-1">
-                      Question {index + 1}
-                      <span className="text-red-500 text-xs">*</span>
-                    </h5>
-                    <input
-                      required
-                      type="text"
-                      name="questionTitle"
-                      id="questionTitle"
-                      placeholder="Enter question title"
-                      value={question.title}
-                      onChange={(e) =>
-                        updateQuestion(index, "title", e.target.value)
-                      }
-                      className="text-sm shadow-sm border-[#f6f5f4] bg-[#f6f5f4] block w-full rounded-md p-2"
-                    />
-                  </div>
-                  <div className="px-3">
-                    <h5 className="font-medium">Options:</h5>
-                    {question.options.map((option, optionIndex) => (
-                      <div
-                        key={optionIndex}
-                        className="flex items-center mb-2 gap-2"
+          {questions.map((question, index) => (
+            <div key={index} className="flex mb-3">
+              <div className="grow">
+                <div className="mb-4">
+                  <h5 className="font-medium mb-1">
+                    Question {index + 1}
+                    <span className="text-red-500 text-xs">*</span>
+                  </h5>
+                  <input
+                    required
+                    type="text"
+                    name="questionTitle"
+                    id="questionTitle"
+                    placeholder="Enter question title"
+                    value={question.title}
+                    onChange={(e) =>
+                      updateQuestion(index, "title", e.target.value)
+                    }
+                    className="text-sm shadow-sm border-[#f6f5f4] bg-[#f6f5f4] block w-full rounded-md p-2"
+                  />
+                </div>
+                <div className="px-3">
+                  <h5 className="font-medium">Options:</h5>
+                  {question.options.map((option, optionIndex) => (
+                    <div
+                      key={optionIndex}
+                      className="flex items-center mb-2 gap-2"
+                    >
+                      <span className="mr-2">
+                        {String.fromCharCode(65 + optionIndex)}.
+                      </span>
+                      <input
+                        type="text"
+                        name="questionOption"
+                        id="questionOption"
+                        value={option}
+                        onChange={(e) =>
+                          updateOption(index, optionIndex, e.target.value)
+                        }
+                        className="text-sm shadow-sm border-[#f6f5f4] bg-[#f6f5f4] block w-full rounded-md p-2"
+                        placeholder={`Option ${optionIndex + 1}`}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setCorrectAnswer(index, optionIndex)}
+                        className={`border border-emerald-500 inline-flex items-center justify-center rounded-md p-2 transition ${
+                          question.correctAnswer === optionIndex
+                            ? "bg-emerald-500/80"
+                            : "bg-white"
+                        }`}
                       >
-                        <span className="mr-2">
-                          {String.fromCharCode(65 + optionIndex)}.
-                        </span>
-                        <input
-                          type="text"
-                          name="questionOption"
-                          id="questionOption"
-                          value={option}
-                          onChange={(e) =>
-                            updateOption(index, optionIndex, e.target.value)
-                          }
-                          className="text-sm shadow-sm border-[#f6f5f4] bg-[#f6f5f4] block w-full rounded-md p-2"
-                          placeholder={`Option ${optionIndex + 1}`}
+                        <Check
+                          size={14}
+                          className={`${
+                            question.correctAnswer !== optionIndex
+                              ? "text-emerald-700"
+                              : "text-white"
+                          }`}
                         />
+                      </button>
+                      {question.options.length > 2 && (
                         <button
                           type="button"
-                          onClick={() => setCorrectAnswer(index, optionIndex)}
-                          className={`border border-emerald-500 inline-flex items-center justify-center rounded-md p-2 transition ${
-                            question.correctAnswer === optionIndex
-                              ? "bg-emerald-500/80"
-                              : "bg-white"
-                          }`}
+                          onClick={() => removeOption(index, optionIndex)}
+                          className="border border-red-500 inline-flex items-center justify-center rounded-md p-2 transition"
                         >
-                          <Check
-                            size={14}
-                            className={`${
-                              question.correctAnswer !== optionIndex
-                                ? "text-emerald-700"
-                                : "text-white"
-                            }`}
-                          />
+                          <X size={14} className="text-red-500" />
                         </button>
-                        {question.options.length > 2 && (
-                          <button
-                            type="button"
-                            onClick={() => removeOption(index, optionIndex)}
-                            className="border border-red-500 inline-flex items-center justify-center rounded-md p-2 transition"
-                          >
-                            <X size={14} className="text-red-500" />
-                          </button>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                  <div className="flex gap-4 mt-4">
-                    <button
-                      type="button"
-                      className="text-sky-600 font-medium flex items-center gap-1 text-sm border border-sky-600 px-3 py-1 rounded-md shadow-sm transition hover:bg-sky-500/5 hover:border-sky-500/5"
-                      onClick={() => addOption(index)}
-                    >
-                      Add Option
-                    </button>
-                    <button
-                      type="button"
-                      className="flex text-emerald-500 font-medium items-center gap-1 text-sm border border-emerald-500 px-3 py-1 rounded-md shadow-sm transition hover:bg-emerald-500/5 hover:border-emerald-500/5"
-                      onClick={() => duplicateQuestion(index)}
-                    >
-                      Duplicate Question
-                    </button>
-                    <button
-                      type="button"
-                      className="flex text-red-500 font-medium text items-center gap-1 text-sm border border-red-500 px-3 py-1 rounded-md shadow-sm transition hover:bg-red-500/5 hover:border-red-500/5"
-                      onClick={() => removeQuestion(index)}
-                    >
-                      Remove Question
-                    </button>
-                  </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                <div className="flex gap-4 mt-4">
+                  <button
+                    type="button"
+                    className="text-sky-600 font-medium flex items-center gap-1 text-sm border border-sky-600 px-3 py-1 rounded-md shadow-sm transition hover:bg-sky-500/5 hover:border-sky-500/5"
+                    onClick={() => addOption(index)}
+                  >
+                    Add Option
+                  </button>
+                  <button
+                    type="button"
+                    className="flex text-emerald-500 font-medium items-center gap-1 text-sm border border-emerald-500 px-3 py-1 rounded-md shadow-sm transition hover:bg-emerald-500/5 hover:border-emerald-500/5"
+                    onClick={() => duplicateQuestion(index)}
+                  >
+                    Duplicate Question
+                  </button>
+                  <button
+                    type="button"
+                    className="flex text-red-500 font-medium text items-center gap-1 text-sm border border-red-500 px-3 py-1 rounded-md shadow-sm transition hover:bg-red-500/5 hover:border-red-500/5"
+                    onClick={() => removeQuestion(index)}
+                  >
+                    Remove Question
+                  </button>
                 </div>
               </div>
-            ))}
-            <div className="flex justify-end gap-4 mt-4">
-              <button
-                type="button"
-                className="text-white bg-emerald-500 border border-emerald-500 rounded-md shadow-sm  px-3 py-1 transition"
-                onClick={addQuestion}
-              >
-                Add Question
-              </button>
-              <button
-                type="submit"
-                className="text-white bg-sky-600 border border-sky-600 px-3 py-1 rounded-md shadow-sm transition disabled:bg-gray-300 disabled:border-gray-300"
-                disabled={!allQuestionsHaveAnswers || !hasQuestions}
-              >
-                Save Quiz
-              </button>
             </div>
-          </form>
-        </div>
+          ))}
+          <div className="flex justify-end gap-4 mt-4">
+            <button
+              type="button"
+              className="text-white bg-emerald-500 border border-emerald-500 rounded-md shadow-sm  px-3 py-1 transition"
+              onClick={addQuestion}
+            >
+              Add Question
+            </button>
+            <button
+              type="submit"
+              className="text-white bg-sky-600 border border-sky-600 px-3 py-1 rounded-md shadow-sm transition disabled:bg-gray-300 disabled:border-gray-300"
+              disabled={!allQuestionsHaveAnswers || !hasQuestions}
+            >
+              Save Quiz
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );
